@@ -1,0 +1,27 @@
+{
+  "name": "ayr",
+  "version": "1.0.0",
+  "description": "A Discord bot made as a submission for Discord's HackWeek.",
+  "main": "app.js",
+  "scripts": {
+	"start": "node .",
+    "test": "echo \"There's no need to test something that's already perfect. :)\" && exit 1"
+  },
+  "author": {
+    "name": "PlutonusDev",
+    "email": "plutonus.stream@gmail.com"
+  },
+
+  "engines": {
+    "node": ">=6.0.0"
+  },
+
+  "homepage": "https://github.com/PlutonusDev/Ayr",
+  "bugs": "https://github.com/PlutonusDev/Ayr/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/PlutonusDev/Ayr.git"
+  },
+
+  "license": "GPL-3.0"
+}
