@@ -20,3 +20,6 @@ Ayr isn't just a Discord bot, it's *the* Discord bot! More specifically, the onl
 - 😯 More Secret Stuff
 
 What are you waiting for? [Click here to add the bot to your server!](https://discordapp.com/oauth2/authorize?client_id=593288097928839169&scope=bot&permissions=70569031)
+
+## So You Wanna Self-Host?
+Hey, I understand! It's nice and easy to host Ayr yourself, but I don't have the time to write a mini tutorial just yet - hold tight, *pat your cats*!
