@@ -7,7 +7,7 @@ module.exports = {
     name: "dog",
     description: "🐶 Find a doggo!",
     aliases: ["doggo", "woof"],
-    execute(client, msg, args) {
+    execute(Ayr, msg, args) {
 		msg.channel.send(new Embed(
 			"Loading",
 			"Finding you a doggo...",

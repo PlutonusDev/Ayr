@@ -48,7 +48,7 @@ get("https://memegen.link/templates/").then(({body}) => {
 
 module.exports = {
 	name: "meme",
-	description: ":eyes: Let's find some content.",
+	description: "👀 Let's find some content.",
 	aliases: [],
 	usage: `\`${prefix}meme\``,
 	usage2: `\`${prefix}meme list\``,

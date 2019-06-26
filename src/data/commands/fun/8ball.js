@@ -13,7 +13,7 @@ function getResponse() {return responses[Math.floor(Math.random()*responses.leng
 
 module.exports = {
 	name: "8ball",
-	description: ":sunglasses: Now you too can predict the future!",
+	description: "😎 Now you too can predict the future!",
 	aliases: ["predict", "guess"],
 	usage: `\`${prefix}8ball <Question>\`\n\`${prefix}8ball Will it rain today?\``,
 	execute: (Ayr, msg, args) => {
@@ -23,7 +23,7 @@ module.exports = {
 			"Hold Up?",
 			`Maybe you should ask a question, ${msg.author}!\n\n${module.exports.usage}`,
 			Colour(255, 102, 102)
-		));
+		)).then(m=>m.delete(7000));
 
 		return msg.channel.send(new Embed(
 			"My Prediction",

@@ -1,5 +1,9 @@
 module.exports = {
-	"token": "YOUR-BOT-TOKEN",
+	"auth": {
+		"bot-token": "YOUR-BOT-TOKEN",
+		"yt-token": "YOUR-GOOGLE-API-KEY"
+	},
+
 	"prefix": ";",
 	"commands": __dirname + "/commands"
 }

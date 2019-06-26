@@ -7,7 +7,7 @@ module.exports = {
     name: "cat",
     description: "🐱 Find a kit!",
     aliases: ["kit", "kitten", "meow"],
-    execute(client, msg, args) {
+    execute(Ayr, msg, args) {
 		msg.channel.send(new Embed(
 			"Loading",
 			"Finding you a kitty...",
@@ -15,8 +15,8 @@ module.exports = {
 		)).then(m => {
 			get('https://aws.random.cat/meow').then(res => {
 				return m.edit({
-					"title": `Kitty for ${msg.member.displayName}`,
 					"embed": {
+						"title": `Kitty for ${msg.member.displayName}`,
 						"image": {
 							"url": res.body.file
 						},
