@@ -6,7 +6,7 @@ const config = require("../../config");
 const youtube = new (require("simple-youtube-api"))(config.auth["yt-token"])
 const ytdl = require("ytdl-core");
 
-function handleSong(Ayr, video, queue, channel, msg, status) {
+function handleSong(Ayr, v, queue, vc, msg, status) {
 	if(!queue) {
 		queue = {
 			textChannel: msg.channel,
@@ -37,13 +37,14 @@ function handleSong(Ayr, video, queue, channel, msg, status) {
 			queue.connection = conn;
 			play(Ayr, msg.guild, queue.songs[0]);
 			return status.delete();
-		}).catch(() => {
+		}).catch((err) => {
 			Ayr.MusicQueue.delete(msg.guild.id);
 			status.edit(new Embed(
 				"Hold Up?",
 				`Something went wrong while trying to join your voice channel, ${msg.author}`,
 				Colour(255, 102, 102)
 			));
+			console.error(err.stack)
 		});
 	} else {
 		const result = addSong(Ayr, msg, v);
@@ -144,7 +145,11 @@ module.exports = {
     execute(Ayr, msg, args) {
 		if(!args[0]) {
 			msg.delete(500);
-			
+			return msg.channel.send(new Embed(
+				"Hold Up?",
+				`You need to provide a song url or a search term, ${msg.author}.\n\n${module.exports.usage}`,
+				Colour(255, 102, 102)
+			));
 		}
 		const url = args[0];
 		const queue = Ayr.MusicQueue.get(msg.guild.id);
@@ -152,7 +157,7 @@ module.exports = {
 		let vc;
 		if(!queue) {
 			vc = msg.member.voiceChannel;
-			if(!voiceChannel || voiceChannel.type !== "voice") {
+			if(!vc || vc.type !== "voice") {
 				msg.delete(500);
 				return msg.channel.send(new Embed(
 					"Hold Up?",

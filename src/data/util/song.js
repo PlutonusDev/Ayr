@@ -18,3 +18,5 @@ class Song {
 		return name;
 	}
 }
+
+module.exports = Song;
