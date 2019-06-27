@@ -13,7 +13,7 @@ function handleSong(Ayr, v, queue, vc, msg, status) {
 			voiceChannel: vc,
 			connection: null,
 			songs: [],
-			volume: 1
+			volume: 3
 		};
 		Ayr.MusicQueue.set(msg.guild.id, queue);
 
@@ -62,13 +62,13 @@ function addSong(Ayr, msg, v) {
 	if(longest > 0 && v.durationSeconds > longest * 60) {
 		return {
 			ok: false,
-			msg: `${video.title} is too long, ${msg.author}.\nYou can only play songs that are 5 minutes long or less.`
+			msg: `${v.title} is too long, ${msg.author}.\nYou can only play songs that are 5 minutes long or less.`
 		}
 	}
-	if(queue.songs.some(song => song.id === video.id)) {
+	if(queue.songs.some(song => song.id === v.id)) {
 		return {
 			ok: false,
-			msg: `${video.title} is already in the queue, ${msg.author}.`
+			msg: `${v.title} is already in the queue, ${msg.author}.`
 		}
 	}
 	const maxSongs = 10;
@@ -88,7 +88,7 @@ function addSong(Ayr, msg, v) {
 }
 
 function play(Ayr, guild, song) {
-	const queue = Ayr.queue.get(guild.id);
+	const queue = Ayr.MusicQueue.get(guild.id);
 
 	if(!song) {
 		queue.textChannel.send(new Embed(
@@ -96,12 +96,13 @@ function play(Ayr, guild, song) {
 			"We've run out of songs! Are we going to keep this party going?",
 			Colour(255, 102, 102)
 		));
-		return this.queue.delete(guild.id);
+		queue.voiceChannel.leave();
+		return Ayr.MusicQueue.delete(guild.id);
 	}
 
 	queue.textChannel.send(new Embed(
 		"Song Queue",
-		`Playing ${song}, queued by ${song.username}.`,
+		`Playing ${song.name}, queued by ${song.username}.`,
 		Colour(102, 255, 102)
 	)).then(status => {
 		let streamErrored = false;
@@ -110,17 +111,17 @@ function play(Ayr, guild, song) {
 			streamErrored = true;
 			status.edit(new Embed(
 				"Song Queue",
-				`Something went wrong playing ${song}.`,
+				`Something went wrong playing ${song.name}.`,
 				Colour(255, 102, 102)
 			));
 			queue.songs.shift();
-			play(guild, queue.songs[0]);
+			play(Ayr, guild, queue.songs[0]);
 		});
-		const dispatcher = queue.connection.playStream(stream, { passes: config.passes })
+		const dispatcher = queue.connection.playStream(stream, { passes: 2 })
 		.on("end", () => {
 			if(streamErrored) return;
 			queue.songs.shift();
-			play(guild, queue.songs[0]);
+			play(Ayr, guild, queue.songs[0]);
 		})
 		.on("error", err => {
 			queue.textChannel.send(new Embed(
@@ -129,7 +130,7 @@ function play(Ayr, guild, song) {
 				Colour(255, 102, 102)
 			));
 			queue.songs.shift();
-			play(guild, queue.songs[0]);
+			play(Ayr, guild, queue.songs[0]);
 		});
 		dispatcher.setVolumeLogarithmic(queue.volume / 5);
 		song.dispatcher = dispatcher;
@@ -167,7 +168,7 @@ module.exports = {
 			}
 
 			const perms = vc.permissionsFor(Ayr.user);
-			if(!perms.hasPermission("CONNECT")) {
+			if(!perms.has("CONNECT")) {
 				msg.delete(500);
 				return msg.channel.send(new Embed(
 					"Hold Up?",
@@ -175,7 +176,7 @@ module.exports = {
 					Colour(255, 102, 102)
 				)).then(m=>m.delete(7000));
 			}
-			if(!perms.hasPermission("SPEAK")) {
+			if(!perms.has("SPEAK")) {
 				msg.delete(500);
 				return msg.channel.send(new Embed(
 					"Hold Up?",
@@ -183,7 +184,7 @@ module.exports = {
 					Colour(255, 102, 102)
 				)).then(m=>m.delete(7000));
 			}
-		} else if(!queue.vc.members.has(msg.author.id)) {
+		} else if(!queue.voiceChannel.members.has(msg.author.id)) {
 			msg.delete(500);
 			return msg.channel.send(new Embed(
 				"Hold Up?",
@@ -199,6 +200,14 @@ module.exports = {
 		)).then(status => {
 			youtube.getVideo(url).then(v => {
 				handleSong(Ayr, v, queue, vc, msg, status);
+				msg.delete();
+			}).catch(() => {
+				search = args.join(" ");
+				youtube.searchVideos(search, 1).then(videos => {
+					youtube.getVideoByID(videos[0].id).then(video2 => {
+						handleSong(Ayr, video2, queue, vc, msg, status);
+					});
+				});
 			});
 		});
 	}
