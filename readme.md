@@ -7,6 +7,7 @@
         <img src="https://img.shields.io/github/stars/PlutonusDev/Ayr.svg">
         <img src="https://img.shields.io/github/last-commit/PlutonusDev/Ayr.svg">
         <img src="https://david-dm.org/PlutonusDev/Ayr.svg">
+		<a href="https://www.codacy.com/app/PlutonusDev/Ayr?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=PlutonusDev/Ayr&amp;utm_campaign=Badge_Grade"><img src="https://api.codacy.com/project/badge/Grade/7fe40aeedcf64e34933588bd3fa43bb1"></a>
     </p>
 </div>
 
