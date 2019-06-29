@@ -15,7 +15,7 @@
 </div>
 
 ## Alrighty, so what is Ayr?
-**Ayr** was a small project made as a submission for Discord's Hack Week 2019 event. Built on the **Discord.JS** library, using the (Trio Framework)[https://github.com/PlutonusDev/Trio], **Ayr** offers great performance and stability.
+**Ayr** was a small project made as a submission for Discord's Hack Week 2019 event. Built on the **Discord.JS** library, using the [Trio Framework](https://github.com/PlutonusDev/Trio), **Ayr** offers great performance and stability.
 
 ## Uh... anything else?
 Well, I don't have time right now to continue. But I'll update this later on when I get time.
