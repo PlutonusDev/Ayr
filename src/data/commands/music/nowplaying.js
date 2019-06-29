@@ -30,7 +30,7 @@ module.exports = {
 
 		return msg.channel.send(new Embed(
 			"Now Playing",
-			`**Now Playing**\n${currentSong.name} *[Added by ${currentSong.username}]*\n\n**Progress**\n${!currentSong.playing ? "Paused: " : ""}${timeString(currentTime)} / ${currentSong.lengthString}\n${progressbar}`,
+			`${currentSong.name} *[Added by ${currentSong.username}]*\n\n**Progress**\n${!currentSong.playing ? "Paused: " : ""}${timeString(currentTime)} / ${currentSong.lengthString}\n${progressbar}`,
 			Colour(102, 255, 102)
 		));
 	}

@@ -6,7 +6,7 @@ const config = require("../../config");
 const youtube = new (require("simple-youtube-api"))(config.auth["yt-token"])
 const ytdl = require("ytdl-core");
 
-function handleSong(Ayr, v, queue, vc, msg, status) {
+async function handleSong(Ayr, v, queue, vc, msg, status) {
 	if(!queue) {
 		queue = {
 			textChannel: msg.channel,
@@ -27,7 +27,7 @@ function handleSong(Ayr, v, queue, vc, msg, status) {
 			));
 		}
 
-		status.edit(new Embed(
+		await status.edit(new Embed(
 			"Loading",
 			`Joining your voice channel, ${msg.author}...`,
 			Colour(255, 255, 102)
@@ -83,7 +83,7 @@ function addSong(Ayr, msg, v) {
 	queue.songs.push(song);
 	return {
 		ok: true,
-		msg: `Queued up the song, ${msg.author}!`
+		msg: `Queued up ${song.name}, ${msg.author}!`
 	}
 }
 
